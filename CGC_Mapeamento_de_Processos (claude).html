@@ -452,7 +452,7 @@ classDef decisao fill:#ffe2b0,color:#5b3a00,stroke:#d99a2b;
 
 subgraph FO["Fornecedor (Preposto)"]
 direction TB
-F1["Elabora BM1 (serviços + evidências)<br/>e BM2 (documentação mensal) no SIGEC WEB"]:::fornecedor
+F1["Elabora BM (serviços + evidências) no SIGEC WEB"]:::fornecedor
 F2["Corrige BM e reenvia"]:::fornecedor
 end
 
@@ -465,7 +465,6 @@ C6{"Valor total do BM"}:::decisao
 C7["Aprovação do Coordenador (≥ R$ 10 mil)"]:::celula
 C8["Aprovação do Gerente (R$ 20 mil – R$ 500 mil)"]:::celula
 C9["Aprovação do Diretor (acima de R$ 500 mil)"]:::celula
-C10["Amostragem mínima de 10% das evidências<br/>(ampliável conforme complexidade)"]:::celula
 C11["Lança medição no IFS · Libera emissão de NF"]:::celula
 end
 
@@ -481,11 +480,12 @@ C2 -->|"Aprovada"| C3 --> FI1
 FI1 -->|"Reprovado"| F2
 FI1 -->|"Aprovado"| GE1
 GE1 -->|"Reprovado"| F2
-GE1 -->|"Aprovado"| C6
-C6 -->|"≥ R$ 10 mil"| C7 --> C10
-C6 -->|"R$ 20 mil – R$ 500 mil"| C8 --> C10
-C6 -->|"Acima R$ 500 mil"| C9 --> C10
-C10 --> C11
+GE1 -->|"Aprovado"| C11
+C11 --> C6
+C6 -->|"≥ R$ 10 mil"| C7 
+C6 -->|"R$ 20 mil – R$ 500 mil"| C8 
+C6 -->|"Acima R$ 500 mil"| C9 
+
         </div></div>
         <div class="legend">
           <span><i style="background:#13233f"></i>Célula de Gestão de Contratos</span>
@@ -509,8 +509,8 @@ classDef decisao fill:#ffe2b0,color:#5b3a00,stroke:#d99a2b;
 
 subgraph CG["Célula de Gestão de Contratos"]
 direction TB
-C1["Recebe e-mail SIGEC de aprovação do BM1"]:::celula --> C2["Abre OC conforme BM e libera emissão da NF"]:::celula
-C3["Gera BOOK do SIGEC"]:::celula --> C4["Protocola NF e envia ao setor Fiscal"]:::celula
+C1["Recebe e-mail SIGEC de aprovação do BM"]:::celula --> C2["Abre OC conforme BM e libera emissão da NF"]:::celula
+C3["Protocola NF e envia ao setor Fiscal"]:::celula
 end
 
 subgraph FO["Fornecedor"]
@@ -519,9 +519,9 @@ F1["Anexa Nota Fiscal no SIGEC"]:::fornecedor --> F2{"NF correta?"}:::decisao
 F3["Corrige e reenvia NF"]:::fornecedor
 end
 
-C2 --> F1 --> F2
+C2 --> F1 
 F2 -->|"Não"| F3 --> F1
-F2 -->|"Sim"| C3 --> C4
+F2 -->|"Sim"| C3 
         </div></div>
         <div class="legend">
           <span><i style="background:#13233f"></i>Célula de Gestão de Contratos</span>
